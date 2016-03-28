@@ -13,6 +13,15 @@ log.Debug("this is a debug message")
 log.Info("test pkg log")
 log.Error("error occured when create file[%s]", filename)
 log.Panic("Panic! exit now")
+
+i := 1
+f := 1.345
+s := "this is a test string"
+
+log.Debugln("this is a debug message, ", s)
+log.Infoln("test pkg log, ", f)
+log.Errorln("error occured when create file ", filename)
+log.Panicln("Panic! exit now")
 ```
 
 Or create individual logger instance
