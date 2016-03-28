@@ -131,17 +131,39 @@ func SetMaxFileSize(maxSize uint64) {
 func Debug(format string, v ...interface{}) {
 	stdLog.output(LEVEL_DEBUG, format, v...)
 }
+func Debugln(v ...interface{}) {
+	stdLog.output(LEVEL_DEBUG, "", v...)
+}
+
 func Info(format string, v ...interface{}) {
 	stdLog.output(LEVEL_INFO, format, v...)
 }
-func Warning(format string, v ...interface{}) {
+func Infoln(v ...interface{}) {
+	stdLog.output(LEVEL_INFO, "", v...)
+}
+
+func Warn(format string, v ...interface{}) {
 	stdLog.output(LEVEL_WARNING, format, v...)
 }
+func Warnln(v ...interface{}) {
+	stdLog.output(LEVEL_WARNING, "", v...)
+}
+
 func Error(format string, v ...interface{}) {
 	stdLog.output(LEVEL_ERROR, format, v...)
 }
+func Errorln(v ...interface{}) {
+	stdLog.output(LEVEL_ERROR, "", v...)
+}
+
 func Panic(format string, v ...interface{}) {
 	stdLog.output(LEVEL_PANIC, format, v...)
+
+	os.Exit(1)
+}
+
+func Panicln(v ...interface{}) {
+	stdLog.output(LEVEL_PANIC, "", v...)
 
 	os.Exit(1)
 }
@@ -182,17 +204,38 @@ func (l *Logger) SetMaxFileSize(maxSize uint64) {
 func (l *Logger) Debug(format string, v ...interface{}) {
 	l.output(LEVEL_DEBUG, format, v...)
 }
+func (l *Logger) Debugln(v ...interface{}) {
+	l.output(LEVEL_DEBUG, "", v...)
+}
+
 func (l *Logger) Info(format string, v ...interface{}) {
 	l.output(LEVEL_INFO, format, v...)
 }
-func (l *Logger) Warning(format string, v ...interface{}) {
+func (l *Logger) Infoln(v ...interface{}) {
+	l.output(LEVEL_INFO, "", v...)
+}
+
+func (l *Logger) Warn(format string, v ...interface{}) {
 	l.output(LEVEL_WARNING, format, v...)
 }
+func (l *Logger) Warnln(v ...interface{}) {
+	l.output(LEVEL_WARNING, "", v...)
+}
+
 func (l *Logger) Error(format string, v ...interface{}) {
 	l.output(LEVEL_ERROR, format, v...)
 }
+func (l *Logger) Errorln(v ...interface{}) {
+	l.output(LEVEL_ERROR, "", v...)
+}
+
 func (l *Logger) Panic(format string, v ...interface{}) {
 	l.output(LEVEL_PANIC, format, v...)
+
+	os.Exit(1)
+}
+func (l *Logger) Panicln(v ...interface{}) {
+	l.output(LEVEL_PANIC, "", v...)
 
 	os.Exit(1)
 }
@@ -201,7 +244,12 @@ func (l *Logger) output(level LogLevel, format string, v ...interface{}) {
 	if level < l.level {
 		return
 	}
-	s := fmt.Sprintf(format, v...)
+	var s string
+	if format == "" {
+		s = fmt.Sprint(v...)
+	} else {
+		s = fmt.Sprintf(format, v...)
+	}
 
 	var b bytes.Buffer
 	fmt.Fprint(&b, level, " ", s)

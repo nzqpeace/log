@@ -13,8 +13,21 @@ func TestLogCommon(t *testing.T) {
 		t.Error("open file failed")
 	}
 
+	i := 0
+	d := 1.456
+	s := "this is a test string"
+
 	logger := log.NewLogger(f)
 	logger.Debug("test debug")
+	logger.Debug("test debug, %d/%f/%s", i, d, s)
+	logger.Debugln("test debug")
+	logger.Debugln("test debug, ", i, d, s)
+
+	logger.Info("test info, %d/%f/%s", i, d, s)
+	logger.Infoln("test info, ", i, d, s)
+
+	logger.Error("test error, %d/%f/%s", i, d, s)
+	logger.Errorln("test error, ", i, d, s)
 }
 
 func TestMaxFileSize(t *testing.T) {
