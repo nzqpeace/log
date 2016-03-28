@@ -30,16 +30,6 @@ func TestLogCommon(t *testing.T) {
 	logger.Errorln("test error, ", i, d, s)
 }
 
-func TestMaxFileSize(t *testing.T) {
-	logFileName := "./log/max_file_size.log"
-	log.SetLogFile(logFileName)
-	log.SetMaxFileSize(1 * 1024)
-
-	for i := 0; i < 1*1024; i++ {
-		log.Info("Test max file size, line:%d", i)
-	}
-}
-
 func BenchmarkDebug(t *testing.B) {
 	f, err := os.OpenFile("t.log", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
 	if err != nil {

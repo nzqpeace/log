@@ -256,13 +256,17 @@ func (l *Logger) output(level LogLevel, format string, v ...interface{}) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
 	if l.filename != "" && l.currFileSize+(uint64)(b.Len()) > l.maxFileSize {
-		fmt.Printf("create new log file... %d/%d/%d\n", l.currFileSize, uint64(b.Len()), l.maxFileSize)
 		// create new log file
-		newLogName := l.filename
-		//newLogName := os.Args[0] + "_" + time.Now().Format("2006_01_02T15_04_05") + ".log"
-		if dotIndex := strings.LastIndex(l.filename, "."); dotIndex != -1 {
-			newLogName = l.filename[:dotIndex] + "_" + time.Now().Format("2006_01_02T15_04_05") + ".log"
+		var newLogName string
+		lastSlashIndex := strings.LastIndex(l.filename, "/")
+		if lastSlashIndex != -1 {
+			dir := l.filename[:lastSlashIndex+1]
+			newLogName += dir
 		}
+		newLogName += os.Args[0] + "_" + time.Now().Format("2006_01_02T15_04_05") + ".log"
+		//if dotIndex := strings.LastIndex(l.filename, "."); dotIndex != -1 {
+		//newLogName = l.filename[:dotIndex] + "_" + time.Now().Format("2006_01_02T15_04_05") + ".log"
+		//}
 
 		err := l.createNewLogFile(newLogName)
 		if err != nil {
