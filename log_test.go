@@ -33,9 +33,9 @@ func TestLogCommon(t *testing.T) {
 func TestMaxFileSize(t *testing.T) {
 	logFileName := "./log/max_file_size.log"
 	log.SetLogFile(logFileName)
-	log.SetMaxFileSize(10 * 1024 * 1024)
+	log.SetMaxFileSize(1 * 1024)
 
-	for i := 0; i < 10*1024*1024; i++ {
+	for i := 0; i < 1*1024; i++ {
 		log.Info("Test max file size, line:%d", i)
 	}
 }
