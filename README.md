@@ -1,6 +1,8 @@
 # log
 A log library written by golang, based on official log pkg, support log level and partition by file size automatically
 
+[![Build Status](https://travis-ci.org/nzqpeace/log.svg?branch=master)](https://travis-ci.org/nzqpeace/log)
+
 ## Usage
 ```go
 logFileName := "./log/example.log"
